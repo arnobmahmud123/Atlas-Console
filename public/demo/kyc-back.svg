@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#0f172a" />
+  <rect x="40" y="40" width="720" height="440" rx="24" fill="#111827" stroke="#fbbf24" stroke-width="2" />
+  <text x="80" y="110" font-family="Arial" font-size="28" fill="#e2e8f0">KYC DOCUMENT</text>
+  <text x="80" y="155" font-family="Arial" font-size="16" fill="#94a3b8">Back Side</text>
+  <rect x="80" y="200" width="640" height="60" rx="12" fill="#0b1220" stroke="#334155" />
+  <rect x="80" y="290" width="640" height="60" rx="12" fill="#0b1220" stroke="#334155" />
+  <rect x="80" y="380" width="640" height="60" rx="12" fill="#0b1220" stroke="#334155" />
+  <text x="100" y="235" font-family="Arial" font-size="14" fill="#fde68a">Authority: Demo State</text>
+  <text x="100" y="325" font-family="Arial" font-size="14" fill="#fde68a">Signature: Authorized</text>
+  <text x="100" y="415" font-family="Arial" font-size="14" fill="#fde68a">Notes: Sample document</text>
+</svg>

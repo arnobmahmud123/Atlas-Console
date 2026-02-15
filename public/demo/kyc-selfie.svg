@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="520" viewBox="0 0 520 520">
+  <rect width="520" height="520" fill="#0f172a" />
+  <circle cx="260" cy="210" r="120" fill="#111827" stroke="#34d399" stroke-width="4" />
+  <rect x="140" y="330" width="240" height="140" rx="60" fill="#111827" stroke="#34d399" stroke-width="4" />
+  <text x="260" y="480" font-family="Arial" font-size="18" fill="#a7f3d0" text-anchor="middle">SELFIE</text>
+</svg>

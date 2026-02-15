@@ -1,0 +1,848 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AuditLog {
+  id         String    @id @db.Uuid
+  user_id    String?   @db.Uuid
+  action     String
+  resource   String
+  metadata   Json?
+  ip_address String?   @db.VarChar(64)
+  user_agent String?
+  created_at DateTime  @default(now())
+  updated_at DateTime
+  deleted_at DateTime?
+  User       User?     @relation(fields: [user_id], references: [id])
+
+  @@index([action])
+  @@index([created_at])
+  @@index([resource])
+  @@index([user_id])
+}
+
+model Announcement {
+  id            String           @id @db.Uuid
+  title         String
+  message       String
+  type          AnnouncementType @default(GENERAL)
+  is_active     Boolean          @default(true)
+  published_at  DateTime         @default(now())
+  expires_at    DateTime?
+  created_by    String           @db.Uuid
+  created_at    DateTime         @default(now())
+  updated_at    DateTime
+  CreatedBy     User             @relation(fields: [created_by], references: [id])
+
+  @@index([created_by])
+  @@index([is_active])
+  @@index([published_at])
+}
+
+model Deposit {
+  id                 String        @id @db.Uuid
+  user_id            String        @db.Uuid
+  amount             Decimal
+  payment_method     PaymentMethod
+  status             DepositStatus
+  external_reference String?
+  created_at         DateTime      @default(now())
+  updated_at         DateTime
+  User               User          @relation(fields: [user_id], references: [id])
+
+  @@index([status])
+  @@index([user_id])
+}
+
+model DepositRequest {
+  id                        String               @id @db.Uuid
+  user_id                   String               @db.Uuid
+  method                    MobileMoneyMethod
+  amount                    Decimal
+  transaction_id            String
+  receipt_file_url          String?
+  status                    DepositRequestStatus
+  reviewed_by_accountant_id String?              @db.Uuid
+  finalized_by_admin_id     String?              @db.Uuid
+  notes                     String?
+  reject_reason             String?
+  created_at                DateTime             @default(now())
+  updated_at                DateTime
+  User                      User                 @relation(fields: [user_id], references: [id])
+  ReviewedByAccountant      User?                @relation("DepositRequest_reviewedByAccountant", fields: [reviewed_by_accountant_id], references: [id])
+  FinalizedByAdmin          User?                @relation("DepositRequest_finalizedByAdmin", fields: [finalized_by_admin_id], references: [id])
+
+  @@index([created_at])
+  @@index([status])
+  @@index([user_id])
+  @@index([reviewed_by_accountant_id])
+  @@index([finalized_by_admin_id])
+}
+
+model DeviceFingerprint {
+  id           String    @id @db.Uuid
+  user_id      String    @db.Uuid
+  fingerprint  String    @unique
+  ip_address   String?   @db.VarChar(64)
+  user_agent   String?
+  last_seen_at DateTime?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime
+  deleted_at   DateTime?
+  User         User      @relation(fields: [user_id], references: [id])
+
+  @@index([last_seen_at])
+  @@index([user_id])
+}
+
+model FraudFlag {
+  id         String   @id @db.Uuid
+  user_id    String   @db.Uuid
+  flag_type  String
+  risk_score Int
+  notes      String?
+  created_at DateTime @default(now())
+  User       User     @relation(fields: [user_id], references: [id])
+
+  @@index([risk_score])
+  @@index([user_id])
+}
+
+model InvestmentPlan {
+  id                 String               @id @db.Uuid
+  name               String               @unique
+  min_amount         Decimal
+  max_amount         Decimal
+  roi_type           RoiType
+  roi_value          Decimal
+  duration_days      Int
+  is_active          Boolean              @default(true)
+  created_at         DateTime             @default(now())
+  deleted_at         DateTime?
+  InvestmentPosition InvestmentPosition[]
+
+  @@index([deleted_at])
+}
+
+model InvestmentPosition {
+  id                String           @id @db.Uuid
+  user_id           String           @db.Uuid
+  plan_id           String           @db.Uuid
+  invested_amount   Decimal
+  start_date        DateTime
+  end_date          DateTime
+  status            InvestmentStatus
+  total_profit_paid Decimal          @default(0)
+  InvestmentPlan    InvestmentPlan   @relation(fields: [plan_id], references: [id])
+  User              User             @relation(fields: [user_id], references: [id])
+
+  @@index([plan_id])
+  @@index([status])
+  @@index([user_id])
+}
+
+model Kyc {
+  id                         String       @id @db.Uuid
+  user_id                    String       @db.Uuid
+  document_type              DocumentType
+  document_front_url         String
+  document_back_url          String?
+  selfie_url                 String
+  status                     KycStatus
+  review_notes               String?
+  reviewed_by                String?      @db.Uuid
+  created_at                 DateTime     @default(now())
+  User_Kyc_reviewed_byToUser User?        @relation("Kyc_reviewed_byToUser", fields: [reviewed_by], references: [id])
+  User_Kyc_user_idToUser     User         @relation("Kyc_user_idToUser", fields: [user_id], references: [id])
+
+  @@index([status])
+  @@index([user_id])
+}
+
+model LedgerAccount {
+  id          String        @id @db.Uuid
+  user_id     String        @db.Uuid
+  wallet_id   String        @db.Uuid
+  name        String
+  account_no  String        @unique
+  created_at  DateTime      @default(now())
+  updated_at  DateTime
+  deleted_at  DateTime?
+  User        User          @relation(fields: [user_id], references: [id])
+  Wallet      Wallet        @relation(fields: [wallet_id], references: [id])
+  LedgerEntry LedgerEntry[]
+
+  @@index([deleted_at])
+  @@index([user_id])
+  @@index([wallet_id])
+}
+
+model LedgerEntry {
+  id                String          @id @db.Uuid
+  user_id           String          @db.Uuid
+  wallet_id         String          @db.Uuid
+  ledger_account_id String          @db.Uuid
+  transaction_id    String?         @db.Uuid
+  amount            Decimal
+  direction         LedgerDirection
+  description       String?
+  created_at        DateTime        @default(now())
+  updated_at        DateTime
+  deleted_at        DateTime?
+  LedgerAccount     LedgerAccount   @relation(fields: [ledger_account_id], references: [id])
+  Transaction       Transaction?    @relation(fields: [transaction_id], references: [id])
+  User              User            @relation(fields: [user_id], references: [id])
+  Wallet            Wallet          @relation(fields: [wallet_id], references: [id])
+
+  @@index([created_at])
+  @@index([deleted_at])
+  @@index([ledger_account_id])
+  @@index([transaction_id])
+  @@index([user_id])
+  @@index([wallet_id])
+}
+
+model LoginHistory {
+  id         String    @id @db.Uuid
+  user_id    String    @db.Uuid
+  ip_address String?   @db.VarChar(64)
+  user_agent String?
+  succeeded  Boolean   @default(true)
+  created_at DateTime  @default(now())
+  updated_at DateTime
+  deleted_at DateTime?
+  User       User      @relation(fields: [user_id], references: [id])
+
+  @@index([created_at])
+  @@index([user_id])
+}
+
+model Notification {
+  id         String           @id @db.Uuid
+  user_id    String?          @db.Uuid
+  type       NotificationType
+  title      String
+  message    String
+  href       String?
+  attachment_url String?
+  read       Boolean          @default(false)
+  created_at DateTime         @default(now())
+  User       User?            @relation(fields: [user_id], references: [id])
+
+  @@index([read])
+  @@index([user_id])
+}
+
+model Referral {
+  id                                 String   @id @db.Uuid
+  user_id                            String   @db.Uuid
+  parent_user_id                     String   @db.Uuid
+  level                              Int
+  path                               String
+  created_at                         DateTime @default(now())
+  User_Referral_parent_user_idToUser User     @relation("Referral_parent_user_idToUser", fields: [parent_user_id], references: [id])
+  User_Referral_user_idToUser        User     @relation("Referral_user_idToUser", fields: [user_id], references: [id])
+
+  @@index([level])
+  @@index([parent_user_id])
+  @@index([user_id])
+}
+
+model RefreshToken {
+  id         String    @id @db.Uuid
+  user_id    String    @db.Uuid
+  token_hash String
+  expires_at DateTime
+  created_at DateTime  @default(now())
+  revoked_at DateTime?
+  User       User      @relation(fields: [user_id], references: [id])
+
+  @@index([expires_at])
+  @@index([user_id])
+}
+
+model SiteSettings {
+  id         String   @id @db.Uuid
+  key        String   @unique
+  value      Json
+  created_at DateTime @default(now())
+  updated_at DateTime
+}
+
+model DocumentCenterItem {
+  id            String                 @id @db.Uuid
+  title         String
+  category      DocumentCenterCategory
+  file_url      String
+  notes         String?
+  is_active     Boolean                @default(true)
+  uploaded_by   String                 @db.Uuid
+  created_at    DateTime               @default(now())
+  updated_at    DateTime
+  UploadedBy    User                   @relation(fields: [uploaded_by], references: [id])
+
+  @@index([category])
+  @@index([created_at])
+  @@index([is_active])
+  @@index([uploaded_by])
+}
+
+model ProfitBatch {
+  id                      String              @id @db.Uuid
+  period_type             ProfitPeriodType
+  period_start            DateTime
+  period_end              DateTime
+  total_profit            Decimal
+  gross_revenue           Decimal             @default(0)
+  total_expenses          Decimal             @default(0)
+  net_profit              Decimal             @default(0)
+  business_reserve_amount Decimal             @default(0)
+  investor_pool_amount    Decimal             @default(0)
+  referral_pool_amount    Decimal             @default(0)
+  submission_attachment_url String?
+  submitted_note          String?
+  total_investment_amount Decimal?
+  recipient_count         Int?
+  revision_count          Int                 @default(0)
+  last_feedback_at        DateTime?
+  status                  ProfitBatchStatus
+  created_by_accountant_id String            @db.Uuid
+  finalized_by_admin_id   String?            @db.Uuid
+  created_at             DateTime            @default(now())
+  updated_at             DateTime
+  CreatedByAccountant    User                @relation("ProfitBatch_createdByAccountant", fields: [created_by_accountant_id], references: [id])
+  FinalizedByAdmin       User?               @relation("ProfitBatch_finalizedByAdmin", fields: [finalized_by_admin_id], references: [id])
+  allocations            ProfitAllocation[]
+  comments               ProfitBatchComment[]
+
+  @@index([status])
+  @@index([period_start, period_end])
+  @@index([created_by_accountant_id])
+  @@index([finalized_by_admin_id])
+}
+
+model ProfitBatchComment {
+  id             String                 @id @db.Uuid
+  batch_id       String                 @db.Uuid
+  author_id      String                 @db.Uuid
+  author_role    UserRole
+  type           ProfitBatchCommentType
+  message        String
+  attachment_url String?
+  created_at     DateTime               @default(now())
+  updated_at     DateTime
+  batch          ProfitBatch            @relation(fields: [batch_id], references: [id])
+  author         User                   @relation(fields: [author_id], references: [id])
+
+  @@index([batch_id])
+  @@index([author_id])
+  @@index([created_at])
+}
+
+model ProfitAllocation {
+  id                  String                 @id @db.Uuid
+  batch_id            String                 @db.Uuid
+  user_id             String                 @db.Uuid
+  investment_snapshot Decimal
+  share_percent       Decimal
+  profit_amount       Decimal
+  status              ProfitAllocationStatus
+  credited_at         DateTime?
+  created_at          DateTime               @default(now())
+  updated_at          DateTime
+  batch               ProfitBatch            @relation(fields: [batch_id], references: [id])
+  user                User                   @relation(fields: [user_id], references: [id])
+
+  @@unique([batch_id, user_id])
+  @@index([status])
+  @@index([batch_id])
+  @@index([user_id])
+}
+
+model CommissionEvent {
+  id               String               @id @db.Uuid
+  source_type      CommissionSourceType
+  source_id        String
+  downline_user_id String               @db.Uuid
+  amount           Decimal
+  created_at       DateTime             @default(now())
+  updated_at       DateTime
+  downline_user    User                 @relation(fields: [downline_user_id], references: [id])
+  commissions      ReferralCommission[]
+
+  @@unique([source_type, source_id])
+  @@index([downline_user_id])
+  @@index([source_type, source_id])
+}
+
+model ReferralCommission {
+  id               String          @id @db.Uuid
+  event_id         String          @db.Uuid
+  upline_user_id   String          @db.Uuid
+  downline_user_id String          @db.Uuid
+  level            Int
+  percent          Decimal
+  amount           Decimal
+  transaction_id   String?         @db.Uuid
+  created_at       DateTime        @default(now())
+  updated_at       DateTime
+  event            CommissionEvent @relation(fields: [event_id], references: [id])
+  upline_user      User            @relation("ReferralCommission_upline", fields: [upline_user_id], references: [id])
+  downline_user    User            @relation("ReferralCommission_downline", fields: [downline_user_id], references: [id])
+  transaction      Transaction?    @relation(fields: [transaction_id], references: [id])
+
+  @@index([event_id])
+  @@index([upline_user_id])
+  @@index([downline_user_id])
+  @@index([transaction_id])
+}
+
+model Transaction {
+  id          String          @id @db.Uuid
+  user_id     String          @db.Uuid
+  wallet_id   String          @db.Uuid
+  type        TransactionType
+  amount      Decimal
+  currency    String          @db.VarChar(10)
+  status      String          @db.VarChar(32)
+  reference   String?         @unique
+  created_at  DateTime        @default(now())
+  updated_at  DateTime
+  deleted_at  DateTime?
+  LedgerEntry LedgerEntry[]
+  ReferralCommission ReferralCommission[]
+  User        User            @relation(fields: [user_id], references: [id])
+  Wallet      Wallet          @relation(fields: [wallet_id], references: [id])
+
+  @@index([created_at])
+  @@index([deleted_at])
+  @@index([status])
+  @@index([type])
+  @@index([user_id])
+  @@index([wallet_id])
+}
+
+model TwoFactorSecret {
+  id             String    @id @db.Uuid
+  user_id        String    @unique @db.Uuid
+  secret_base32  String
+  enabled        Boolean   @default(false)
+  recovery_codes String[]
+  created_at     DateTime  @default(now())
+  updated_at     DateTime
+  deleted_at     DateTime?
+  User           User      @relation(fields: [user_id], references: [id])
+
+  @@index([deleted_at])
+  @@index([enabled])
+}
+
+model User {
+  id                                      String               @id @db.Uuid
+  email                                   String               @unique
+  password_hash                           String?
+  role                                    UserRole             @default(USER)
+  is_active                               Boolean              @default(true)
+  is_verified                             Boolean              @default(false)
+  created_at                              DateTime             @default(now())
+  updated_at                              DateTime
+  deleted_at                              DateTime?
+  AuditLog                                AuditLog[]
+  Deposit                                 Deposit[]
+  DeviceFingerprint                       DeviceFingerprint[]
+  FraudFlag                               FraudFlag[]
+  InvestmentPosition                      InvestmentPosition[]
+  Kyc_Kyc_reviewed_byToUser               Kyc[]                @relation("Kyc_reviewed_byToUser")
+  Kyc_Kyc_user_idToUser                   Kyc[]                @relation("Kyc_user_idToUser")
+  LedgerAccount                           LedgerAccount[]
+  LedgerEntry                             LedgerEntry[]
+  LoginHistory                            LoginHistory[]
+  Notification                            Notification[]
+  Referral_Referral_parent_user_idToUser  Referral[]           @relation("Referral_parent_user_idToUser")
+  Referral_Referral_user_idToUser         Referral[]           @relation("Referral_user_idToUser")
+  RefreshToken                            RefreshToken[]
+  Transaction                             Transaction[]
+  TwoFactorSecret                         TwoFactorSecret?
+  Wallet                                  Wallet[]
+  Withdrawal_Withdrawal_reviewed_byToUser Withdrawal[]         @relation("Withdrawal_reviewed_byToUser")
+  Withdrawal_Withdrawal_user_idToUser     Withdrawal[]         @relation("Withdrawal_user_idToUser")
+  UserActivityLog                         UserActivityLog[]
+  ImpersonationToken_ImpersonatedUser     ImpersonationToken[] @relation("ImpersonatedUser")
+  ImpersonationToken_ImpersonatedBy       ImpersonationToken[] @relation("ImpersonatedBy")
+  UserProfile                             UserProfile?
+  PayoutAccount                           PayoutAccount?
+  EmailOtp                                EmailOtp[]
+  DepositRequest                          DepositRequest[]
+  WithdrawalRequest                       WithdrawalRequest[]
+  DepositRequestReviewed                  DepositRequest[]      @relation("DepositRequest_reviewedByAccountant")
+  DepositRequestFinalized                 DepositRequest[]      @relation("DepositRequest_finalizedByAdmin")
+  WithdrawalRequestReviewed               WithdrawalRequest[]   @relation("WithdrawalRequest_reviewedByAccountant")
+  WithdrawalRequestFinalized              WithdrawalRequest[]   @relation("WithdrawalRequest_finalizedByAdmin")
+  ProfitBatchCreated                      ProfitBatch[]         @relation("ProfitBatch_createdByAccountant")
+  ProfitBatchFinalized                    ProfitBatch[]         @relation("ProfitBatch_finalizedByAdmin")
+  ProfitBatchComment                      ProfitBatchComment[]
+  ProfitAllocation                        ProfitAllocation[]
+  CommissionEvent                         CommissionEvent[]
+  ReferralCommissionUpline                ReferralCommission[]  @relation("ReferralCommission_upline")
+  ReferralCommissionDownline              ReferralCommission[]  @relation("ReferralCommission_downline")
+  DocumentCenterItem                      DocumentCenterItem[]
+  Announcement                            Announcement[]
+  SupportTicket                           SupportTicket[]
+  SupportTicketReply                      SupportTicketReply[]
+
+  @@index([created_at])
+  @@index([deleted_at])
+}
+
+model SupportTicket {
+  id            String              @id @db.Uuid
+  user_id       String              @db.Uuid
+  subject       String
+  message       String
+  status        SupportTicketStatus @default(OPEN)
+  created_at    DateTime            @default(now())
+  updated_at    DateTime
+  User          User                @relation(fields: [user_id], references: [id])
+  replies       SupportTicketReply[]
+
+  @@index([created_at])
+  @@index([status])
+  @@index([user_id])
+}
+
+model SupportTicketReply {
+  id         String        @id @db.Uuid
+  ticket_id  String        @db.Uuid
+  author_id  String        @db.Uuid
+  message    String
+  is_admin   Boolean       @default(false)
+  created_at DateTime      @default(now())
+  updated_at DateTime
+  ticket     SupportTicket @relation(fields: [ticket_id], references: [id])
+  author     User          @relation(fields: [author_id], references: [id])
+
+  @@index([author_id])
+  @@index([created_at])
+  @@index([ticket_id])
+}
+
+model EmailOtp {
+  id          String     @id @db.Uuid
+  user_id     String     @db.Uuid
+  purpose     OtpPurpose
+  code_hash   String
+  expires_at  DateTime
+  attempts    Int        @default(0)
+  consumed_at DateTime?
+  created_at  DateTime   @default(now())
+  User        User       @relation(fields: [user_id], references: [id])
+
+  @@index([created_at])
+  @@index([expires_at])
+  @@index([purpose])
+  @@index([user_id])
+}
+
+model UserProfile {
+  id         String   @id @db.Uuid
+  user_id    String   @unique @db.Uuid
+  full_name  String?
+  phone      String?
+  address    String?
+  avatar_url String?
+  created_at DateTime @default(now())
+  updated_at DateTime
+  deleted_at DateTime?
+  User       User     @relation(fields: [user_id], references: [id])
+
+  @@index([deleted_at])
+  @@index([user_id])
+}
+
+model Wallet {
+  id            String          @id @db.Uuid
+  user_id       String          @db.Uuid
+  name          String
+  currency      String          @db.VarChar(10)
+  type          WalletType      @default(MAIN)
+  created_at    DateTime        @default(now())
+  updated_at    DateTime
+  deleted_at    DateTime?
+  LedgerAccount LedgerAccount[]
+  LedgerEntry   LedgerEntry[]
+  Transaction   Transaction[]
+  User          User            @relation(fields: [user_id], references: [id])
+
+  @@index([currency])
+  @@index([deleted_at])
+  @@index([user_id])
+}
+
+model Withdrawal {
+  id                                String           @id @db.Uuid
+  user_id                           String           @db.Uuid
+  amount                            Decimal
+  withdraw_method                   WithdrawMethod
+  mobile_provider                   MobileBankingProvider?
+  payout_account                    String?
+  status                            WithdrawalStatus
+  reviewed_by                       String?          @db.Uuid
+  created_at                        DateTime         @default(now())
+  updated_at                        DateTime
+  User_Withdrawal_reviewed_byToUser User?            @relation("Withdrawal_reviewed_byToUser", fields: [reviewed_by], references: [id])
+  User_Withdrawal_user_idToUser     User             @relation("Withdrawal_user_idToUser", fields: [user_id], references: [id])
+
+  @@index([status])
+  @@index([user_id])
+}
+
+model WithdrawalRequest {
+  id                        String                 @id @db.Uuid
+  user_id                   String                 @db.Uuid
+  method                    MobileMoneyMethod
+  amount                    Decimal
+  payout_number             String
+  status                    WithdrawalRequestStatus
+  reviewed_by_accountant_id String?                @db.Uuid
+  finalized_by_admin_id     String?                @db.Uuid
+  notes                     String?
+  reject_reason             String?
+  payout_confirmed_at       DateTime?
+  payout_confirmed_by_accountant_id String? @db.Uuid
+  payout_screenshot_url     String?
+  payout_note               String?
+  created_at                DateTime               @default(now())
+  updated_at                DateTime
+  User                      User                   @relation(fields: [user_id], references: [id])
+  ReviewedByAccountant      User?                  @relation("WithdrawalRequest_reviewedByAccountant", fields: [reviewed_by_accountant_id], references: [id])
+  FinalizedByAdmin          User?                  @relation("WithdrawalRequest_finalizedByAdmin", fields: [finalized_by_admin_id], references: [id])
+
+  @@index([created_at])
+  @@index([status])
+  @@index([user_id])
+  @@index([reviewed_by_accountant_id])
+  @@index([finalized_by_admin_id])
+  @@index([payout_confirmed_by_accountant_id])
+}
+
+model PayoutAccount {
+  id              String                 @id @db.Uuid
+  user_id         String                 @unique @db.Uuid
+  account_type    WithdrawMethod
+  mobile_provider MobileBankingProvider?
+  account_number  String
+  created_at      DateTime               @default(now())
+  updated_at      DateTime
+  deleted_at      DateTime?
+  User            User                   @relation(fields: [user_id], references: [id])
+
+  @@index([deleted_at])
+  @@index([user_id])
+}
+
+model UserActivityLog {
+  id         String           @id @db.Uuid
+  user_id    String           @db.Uuid
+  type       UserActivityType
+  metadata   Json?
+  created_at DateTime         @default(now())
+  User       User             @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
+  @@index([type])
+}
+
+model ImpersonationToken {
+  id                    String   @id @db.Uuid
+  token                 String   @unique
+  user_id               String   @db.Uuid
+  created_by            String   @db.Uuid
+  expires_at            DateTime
+  created_at            DateTime @default(now())
+  User_ImpersonatedUser User     @relation("ImpersonatedUser", fields: [user_id], references: [id])
+  User_ImpersonatedBy   User     @relation("ImpersonatedBy", fields: [created_by], references: [id])
+
+  @@index([user_id])
+  @@index([created_by])
+  @@index([expires_at])
+}
+
+enum DepositStatus {
+  PENDING
+  PROCESSING
+  SUCCESS
+  FAILED
+}
+
+enum WalletType {
+  MAIN
+  PROFIT
+}
+
+enum UserActivityType {
+  LOGIN
+  LOGOUT
+  UPDATE_PROFILE
+  DEPOSIT
+  WITHDRAWAL
+  INVESTMENT
+  REFERRAL
+  OTHER
+}
+
+enum DocumentType {
+  PASSPORT
+  NID
+  DRIVING_LICENSE
+}
+
+enum InvestmentStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum KycStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum LedgerDirection {
+  DEBIT
+  CREDIT
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  SUCCESS
+  ERROR
+}
+
+enum PaymentMethod {
+  STRIPE
+  CRYPTO
+  MANUAL
+  BANK
+}
+
+enum RoiType {
+  FIXED
+  VARIABLE
+  ADMIN_MANUAL
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  TRANSFER
+  INVESTMENT
+  DIVIDEND
+  FEE
+  REVERSAL
+}
+
+enum UserRole {
+  ADMIN
+  USER
+  STAFF
+  ACCOUNTANT
+}
+
+enum WithdrawMethod {
+  BANK
+  CRYPTO
+  MANUAL
+  MOBILE_BANKING
+}
+
+enum MobileBankingProvider {
+  BKASH
+  NAGAD
+}
+
+enum MobileMoneyMethod {
+  BKASH
+  NAGAD
+}
+
+enum DepositRequestStatus {
+  PENDING_ACCOUNTANT
+  PENDING_ADMIN_FINAL
+  APPROVED
+  REJECTED
+}
+
+enum WithdrawalRequestStatus {
+  PENDING_ACCOUNTANT
+  PENDING_ADMIN_FINAL
+  APPROVED
+  REJECTED
+}
+
+enum OtpPurpose {
+  WITHDRAWAL
+}
+
+enum ProfitPeriodType {
+  DAILY
+  WEEKLY
+}
+
+enum ProfitBatchStatus {
+  DRAFT
+  PENDING_ADMIN_FINAL
+  APPROVED
+  REJECTED
+}
+
+enum ProfitAllocationStatus {
+  PENDING
+  CREDITED
+}
+
+enum ProfitBatchCommentType {
+  SUBMISSION
+  REQUEST_CHANGES
+  FINAL_REJECT
+  RESUBMIT
+  NOTE
+}
+
+enum CommissionSourceType {
+  PROFIT_DISTRIBUTION
+}
+
+enum WithdrawalStatus {
+  PENDING
+  REVIEW
+  APPROVED
+  REJECTED
+  PAID
+}
+
+enum AnnouncementType {
+  GENERAL
+  PROFIT_DELAY
+  MAINTENANCE
+}
+
+enum SupportTicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum DocumentCenterCategory {
+  BUSINESS_LICENSE
+  SHOP_LEASE
+  TAX_FILE
+  OTHER
+}
