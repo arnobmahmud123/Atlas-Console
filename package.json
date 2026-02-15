@@ -7,7 +7,7 @@
     "dev": "next dev",
     "clean": "rm -rf .next",
     "dev:clean": "rm -rf .next && next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "prisma:generate": "prisma generate",
