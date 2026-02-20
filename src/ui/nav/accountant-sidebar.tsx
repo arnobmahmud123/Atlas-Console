@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const navItems = [
+export const accountantNavItems = [
   { href: '/accountant/dashboard', label: 'Overview' },
   { href: '/accountant/security', label: 'Security (2FA)' },
   { href: '/accountant/profits', label: 'Profit Batches' },
@@ -18,7 +18,7 @@ export function AccountantSidebar() {
     <aside className="bg-card-navy ui-surface hidden h-screen w-64 lg:block">
       <div className="flex h-16 items-center px-6 text-sm font-semibold text-white">Accountant Console</div>
       <nav className="flex flex-col gap-1 px-3">
-        {navItems.map(item => {
+        {accountantNavItems.map(item => {
           const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
             <Link
