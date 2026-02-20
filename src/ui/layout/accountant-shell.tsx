@@ -2,7 +2,7 @@ import { AccountantSidebar } from '@/ui/nav/accountant-sidebar';
 import { AccountantTopbar } from '@/ui/nav/accountant-topbar';
 import { AnnouncementPopup } from '@/ui/components/announcement-popup';
 import Link from 'next/link';
-import { accountantNavItems } from '@/ui/nav/accountant-sidebar';
+import { accountantNavItems } from '@/ui/nav/accountant-nav-items';
 
 export function AccountantShell(props: {
   children: React.ReactNode;

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ProfileMenu } from '@/ui/components/profile-menu';
 import { NotificationsButton } from '@/ui/components/notifications-button';
-import { accountantNavItems } from '@/ui/nav/accountant-sidebar';
+import { accountantNavItems } from '@/ui/nav/accountant-nav-items';
 
 export function AccountantTopbar(props: { userEmail?: string }) {
   const [open, setOpen] = useState(false);
