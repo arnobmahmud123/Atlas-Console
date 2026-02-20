@@ -16,13 +16,13 @@ export function AccountantTopbar(props: { userEmail?: string }) {
         <p className="text-sm font-semibold text-white">Review queue</p>
       </div>
       <button
-        className="bg-card-indigo ui-surface rounded-md px-3 py-1 text-xs text-slate-300 hover:text-white lg:hidden"
+        className="bg-card-indigo ui-surface rounded-md px-3 py-1 text-xs text-slate-200 hover:text-white lg:hidden"
         type="button"
         onClick={() => setOpen(!open)}
       >
         Menu
       </button>
-      <div className="flex items-center gap-3">
+      <div className="hidden items-center gap-3 lg:flex">
         <NotificationsButton viewAllHref="/dashboard/notifications" />
         <ProfileMenu profileHref="/dashboard/profile" email={props.userEmail} name={null} avatarUrl={null} />
       </div>
