@@ -50,16 +50,16 @@ const colorfulCardSkins = [
 export default function HomePage() {
   return (
     <ThemeShell>
-      <main className="min-h-screen bg-[radial-gradient(circle_at_0%_0%,#2749b5_0%,#14244e_35%,#0d1b3a_70%,#0b1733_100%)] text-white">
+      <main className="min-h-screen bg-[radial-gradient(circle_at_12%_8%,#ff7a18_0%,#7b3fe4_34%,#1f2d86_64%,#08122f_100%)] text-white">
         <div className="pointer-events-none fixed inset-0 -z-10">
-          <div className="absolute left-1/2 top-[-80px] h-[760px] w-[760px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(45,212,191,0.32),_transparent_62%)]" />
-          <div className="absolute right-[-120px] top-[80px] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,_rgba(129,140,248,0.35),_transparent_66%)]" />
-          <div className="absolute left-[-140px] bottom-[120px] h-[580px] w-[580px] rounded-full bg-[radial-gradient(circle,_rgba(232,121,249,0.28),_transparent_66%)]" />
-          <div className="absolute bottom-[-120px] right-[10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,_rgba(251,191,36,0.24),_transparent_70%)]" />
+          <div className="absolute left-1/2 top-[-80px] h-[760px] w-[760px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(251,146,60,0.34),_transparent_62%)]" />
+          <div className="absolute right-[-120px] top-[80px] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,_rgba(168,85,247,0.36),_transparent_66%)]" />
+          <div className="absolute left-[-140px] bottom-[120px] h-[580px] w-[580px] rounded-full bg-[radial-gradient(circle,_rgba(236,72,153,0.30),_transparent_66%)]" />
+          <div className="absolute bottom-[-120px] right-[10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,_rgba(56,189,248,0.26),_transparent_70%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_85%)]" />
         </div>
 
-        <header className="sticky top-0 z-50 border-b border-white/10 bg-gradient-to-r from-[#060b1f]/90 via-[#0d1740]/85 to-[#1e1b4b]/90 backdrop-blur">
+        <header className="sticky top-0 z-50 border-b border-white/10 bg-gradient-to-r from-[#2f1a64]/90 via-[#1b2f8c]/88 to-[#0f3464]/90 backdrop-blur">
           <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 to-blue-500">
