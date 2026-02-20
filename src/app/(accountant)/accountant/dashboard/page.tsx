@@ -1,15 +1,20 @@
 import { serverFetch, safeJson } from '@/lib/http/server-fetch';
 
 export default async function AccountantDashboardPage() {
-  const [depsRes, wdsRes] = await Promise.all([
-    serverFetch('/api/accountant/deposit-requests?status=PENDING_ACCOUNTANT'),
-    serverFetch('/api/accountant/withdrawal-requests?status=PENDING_ACCOUNTANT')
-  ]);
-  const deps = await safeJson<{ ok: boolean; data: any[] }>(depsRes);
-  const wds = await safeJson<{ ok: boolean; data: any[] }>(wdsRes);
-
-  const pendingDeposits = deps?.data?.length ?? 0;
-  const pendingWithdrawals = wds?.data?.length ?? 0;
+  let pendingDeposits = 0;
+  let pendingWithdrawals = 0;
+  try {
+    const [depsRes, wdsRes] = await Promise.all([
+      serverFetch('/api/accountant/deposit-requests?status=PENDING_ACCOUNTANT'),
+      serverFetch('/api/accountant/withdrawal-requests?status=PENDING_ACCOUNTANT')
+    ]);
+    const deps = await safeJson<{ ok: boolean; data: any[] }>(depsRes);
+    const wds = await safeJson<{ ok: boolean; data: any[] }>(wdsRes);
+    pendingDeposits = deps?.data?.length ?? 0;
+    pendingWithdrawals = wds?.data?.length ?? 0;
+  } catch (error) {
+    console.error('[accountant/dashboard] failed to load queue', error);
+  }
 
   return (
     <div className="space-y-6 text-white">
@@ -32,4 +37,3 @@ export default async function AccountantDashboardPage() {
     </div>
   );
 }
-
