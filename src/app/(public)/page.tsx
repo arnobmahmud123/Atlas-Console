@@ -50,16 +50,19 @@ const colorfulCardSkins = [
 export default function HomePage() {
   return (
     <ThemeShell>
-      <main className="min-h-screen bg-[radial-gradient(circle_at_12%_8%,#ff7a18_0%,#7b3fe4_34%,#1f2d86_64%,#08122f_100%)] text-white">
+      <main className="min-h-screen bg-[radial-gradient(circle_at_10%_8%,#ff8d3a_0%,#9b5cf7_28%,#2b4fd6_52%,#06112a_78%,#04070f_100%)] text-white">
         <div className="pointer-events-none fixed inset-0 -z-10">
-          <div className="absolute left-1/2 top-[-80px] h-[760px] w-[760px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(251,146,60,0.34),_transparent_62%)]" />
-          <div className="absolute right-[-120px] top-[80px] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,_rgba(168,85,247,0.36),_transparent_66%)]" />
-          <div className="absolute left-[-140px] bottom-[120px] h-[580px] w-[580px] rounded-full bg-[radial-gradient(circle,_rgba(236,72,153,0.30),_transparent_66%)]" />
-          <div className="absolute bottom-[-120px] right-[10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,_rgba(56,189,248,0.26),_transparent_70%)]" />
+          <div className="absolute left-1/2 top-[-110px] h-[840px] w-[840px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(251,146,60,0.34),_rgba(139,92,246,0.18),_transparent_66%)]" />
+          <div className="absolute right-[-150px] top-[20px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,_rgba(168,85,247,0.42),_transparent_68%)]" />
+          <div className="absolute left-[-170px] bottom-[80px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,_rgba(236,72,153,0.34),_transparent_68%)]" />
+          <div className="absolute bottom-[-120px] right-[8%] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,_rgba(56,189,248,0.28),_transparent_72%)]" />
+          <div className="absolute left-[18%] top-[34%] h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,_rgba(99,102,241,0.25),_transparent_72%)] blur-2xl" />
+          <div className="absolute right-[18%] top-[56%] h-[320px] w-[320px] rounded-full bg-[radial-gradient(circle,_rgba(34,197,94,0.14),_transparent_72%)] blur-xl" />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_85%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.08),transparent_35%)]" />
         </div>
 
-        <header className="sticky top-0 z-50 border-b border-white/10 bg-gradient-to-r from-[#2f1a64]/90 via-[#1b2f8c]/88 to-[#0f3464]/90 backdrop-blur">
+        <header className="sticky top-0 z-50 border-b border-white/10 bg-gradient-to-r from-[#170f3b]/88 via-[#172c7a]/86 to-[#0f305c]/88 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 to-blue-500">
@@ -92,7 +95,7 @@ export default function HomePage() {
               </div>
               <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">
                 Digital wealth operations,
-                <span className="mt-2 block bg-gradient-to-r from-cyan-200 via-violet-200 to-fuchsia-200 bg-clip-text text-transparent">
+                <span className="mt-2 block bg-gradient-to-r from-cyan-200 via-violet-200 to-fuchsia-200 bg-clip-text text-transparent [text-shadow:0_0_26px_rgba(139,92,246,0.35)]">
                   rebuilt for scale.
                 </span>
               </h1>
@@ -120,10 +123,12 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <LiveStats />
+              <div className="rounded-2xl border border-white/10 bg-gradient-to-r from-white/8 via-white/5 to-white/0 p-4 shadow-[0_20px_60px_rgba(5,10,25,0.45)]">
+                <LiveStats />
+              </div>
             </div>
             <div className="space-y-4">
-              <div className="rounded-3xl border border-cyan-300/25 bg-gradient-to-br from-cyan-400/25 via-blue-500/18 to-indigo-500/25 p-6 shadow-[0_20px_60px_rgba(56,189,248,0.2)]">
+              <div className="rounded-3xl border border-cyan-300/25 bg-gradient-to-br from-cyan-400/25 via-blue-500/18 to-indigo-500/25 p-6 shadow-[0_20px_60px_rgba(56,189,248,0.2)] ring-1 ring-white/5">
                 <div className="rounded-2xl border border-white/10 bg-slate-900/45 p-6">
                   <p className="text-xs uppercase tracking-[0.3em] text-cyan-200">Live allocation</p>
                   <p className="mt-3 text-3xl font-semibold">+16.9% APY</p>
@@ -134,6 +139,18 @@ export default function HomePage() {
                     <span>Next reward</span>
                     <span>02:14:56</span>
                   </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-2xl border border-fuchsia-300/20 bg-gradient-to-br from-fuchsia-500/18 via-violet-500/10 to-transparent p-5 shadow-[0_18px_50px_rgba(217,70,239,0.18)]">
+                  <p className="text-xs uppercase tracking-[0.22em] text-fuchsia-200">Yield Pulse</p>
+                  <p className="mt-3 text-2xl font-semibold">+2.8%</p>
+                  <p className="mt-1 text-xs text-slate-300">Today trend</p>
+                </div>
+                <div className="rounded-2xl border border-emerald-300/20 bg-gradient-to-br from-emerald-500/18 via-cyan-500/10 to-transparent p-5 shadow-[0_18px_50px_rgba(16,185,129,0.16)]">
+                  <p className="text-xs uppercase tracking-[0.22em] text-emerald-200">Ops Health</p>
+                  <p className="mt-3 text-2xl font-semibold">99.99%</p>
+                  <p className="mt-1 text-xs text-slate-300">Queue uptime</p>
                 </div>
               </div>
               <div className="rounded-2xl border border-violet-300/30 bg-gradient-to-br from-violet-500/30 via-indigo-500/18 to-fuchsia-500/20 p-6 shadow-[0_20px_60px_rgba(139,92,246,0.28)]">
@@ -157,7 +174,7 @@ export default function HomePage() {
               { k: 'Payout Accuracy', v: '99.98%' },
               { k: 'System Uptime', v: '99.99%' }
             ].map((s, i) => (
-              <div key={s.k} className={`rounded-2xl border border-white/10 p-4 ${colorfulCardSkins[i % colorfulCardSkins.length]}`}>
+              <div key={s.k} className={`rounded-2xl border border-white/10 p-4 shadow-[0_18px_44px_rgba(6,10,24,0.35)] backdrop-blur-sm ${colorfulCardSkins[i % colorfulCardSkins.length]}`}>
                 <p className="text-xs text-slate-300">{s.k}</p>
                 <p className="mt-2 text-xl font-semibold">{s.v}</p>
               </div>
@@ -197,7 +214,7 @@ export default function HomePage() {
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {plans.map((plan, idx) => (
-              <div key={plan.name} className={`rounded-2xl border border-white/10 p-6 ${colorfulCardSkins[idx % colorfulCardSkins.length]}`}>
+              <div key={plan.name} className={`group rounded-2xl border border-white/10 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-white/20 ${colorfulCardSkins[idx % colorfulCardSkins.length]}`}>
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-semibold text-cyan-200">{plan.name}</p>
                   <span className="rounded-full border border-white/10 px-3 py-1 text-xs">{plan.term}</span>
@@ -217,7 +234,7 @@ export default function HomePage() {
                     <span key={perk} className="rounded-full border border-white/10 px-3 py-1">{perk}</span>
                   ))}
                 </div>
-              <Button className="mt-5 w-full rounded-full bg-gradient-to-r from-cyan-300 to-blue-500 text-slate-900">
+              <Button className="mt-5 w-full rounded-full bg-gradient-to-r from-cyan-300 to-blue-500 text-slate-900 shadow-[0_10px_30px_rgba(59,130,246,0.35)]">
                 Select Plan
               </Button>
               </div>
@@ -331,7 +348,7 @@ export default function HomePage() {
         </section>
 
         <section className="mx-auto max-w-6xl px-6 py-16">
-          <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 to-white/0 p-6">
+          <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-violet-500/18 via-indigo-500/12 to-cyan-500/10 p-6 shadow-[0_24px_80px_rgba(13,18,40,0.5)]">
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="text-2xl font-semibold">Newsletter</h2>
