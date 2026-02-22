@@ -208,7 +208,13 @@ export function AdminDailySalesManager(props: { mode: 'entry' | 'report' }) {
         <form onSubmit={addItem} className="rounded-2xl border border-white/10 bg-white/5 p-6">
           <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             <input value={productName} onChange={e => setProductName(e.target.value)} placeholder="Product name *" className="rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm" />
-            <input value={productId} onChange={e => setProductId(e.target.value)} placeholder="Product ID (optional, auto-generated if empty)" className="rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm" />
+            <input
+              value={productId}
+              onChange={e => setProductId(e.target.value)}
+              placeholder="Product ID (auto-generated on save)"
+              disabled
+              className="cursor-not-allowed rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-slate-400"
+            />
             <input value={quantity} onChange={e => setQuantity(e.target.value)} type="number" min="1" placeholder="Quantity" className="rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm" />
             <input value={sellingPrice} onChange={e => setSellingPrice(e.target.value)} type="number" step="0.01" min="0" placeholder="Selling price *" className="rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm" />
             <input value={costPrice} onChange={e => setCostPrice(e.target.value)} type="number" step="0.01" min="0" placeholder="Cost price (or use line profit)" className="rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm" />
