@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { authOptions } from '@/modules/auth/services/auth-options';
 import { prisma } from '@/database/prisma/client';
@@ -39,38 +40,53 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ ok: false, errors: { date: ['Invalid date'] } }, { status: 400 });
   }
 
-  const existing = await prisma.dailySalesSession.findUnique({
-    where: { business_date: businessDate }
-  });
+  let existing;
+  try {
+    existing = await prisma.dailySalesSession.findUnique({
+      where: { business_date: businessDate }
+    });
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2021') {
+      return NextResponse.json({ ok: false, message: 'Daily sales tables not found. Run Prisma migration first.' }, { status: 500 });
+    }
+    console.error('[daily-sales session PATCH] load failed', err);
+    return NextResponse.json({ ok: false, message: 'Failed to load daily sales session' }, { status: 500 });
+  }
   if (!existing) {
     return NextResponse.json({ ok: false, message: 'No sales day session found for this date' }, { status: 404 });
   }
 
   const now = new Date();
-  const updated = await prisma.dailySalesSession.update({
-    where: { id: existing.id },
-    data:
-      parsed.data.action === 'END_DAY'
-        ? {
-            status: 'CLOSED',
-            ended_at: now,
-            locked_at: now,
-            locked_by: session.user.id,
-            updated_at: now
-          }
-        : {
-            status: 'OPEN',
-            reopened_at: now,
-            reopened_by: session.user.id,
-            ended_at: null,
-            locked_at: null,
-            locked_by: null,
-            updated_at: now
-          },
-    include: {
-      entries: { orderBy: { created_at: 'asc' } }
-    }
-  });
+  let updated;
+  try {
+    updated = await prisma.dailySalesSession.update({
+      where: { id: existing.id },
+      data:
+        parsed.data.action === 'END_DAY'
+          ? {
+              status: 'CLOSED',
+              ended_at: now,
+              locked_at: now,
+              locked_by: session.user.id,
+              updated_at: now
+            }
+          : {
+              status: 'OPEN',
+              reopened_at: now,
+              reopened_by: session.user.id,
+              ended_at: null,
+              locked_at: null,
+              locked_by: null,
+              updated_at: now
+            },
+      include: {
+        entries: { orderBy: { created_at: 'asc' } }
+      }
+    });
+  } catch (err) {
+    console.error('[daily-sales session PATCH] update failed', err);
+    return NextResponse.json({ ok: false, message: 'Failed to update daily sales session' }, { status: 500 });
+  }
 
   return NextResponse.json({
     ok: true,
@@ -78,4 +94,3 @@ export async function PATCH(request: Request) {
     message: parsed.data.action === 'END_DAY' ? 'Day closed and locked.' : 'Day re-opened.'
   });
 }
-

@@ -70,64 +70,79 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, errors: { lineProfit: ['Line profit cannot be negative'] } }, { status: 400 });
   }
 
-  const result = await prisma.$transaction(async tx => {
-    let salesDay = await tx.dailySalesSession.findUnique({
-      where: { business_date: businessDate }
-    });
+  let result:
+    | { item: any; session: any }
+    | 'DAY_CLOSED'
+    | null = null;
+  try {
+    result = await prisma.$transaction(async tx => {
+      let salesDay = await tx.dailySalesSession.findUnique({
+        where: { business_date: businessDate }
+      });
 
-    if (!salesDay) {
-      salesDay = await tx.dailySalesSession.create({
+      if (!salesDay) {
+        salesDay = await tx.dailySalesSession.create({
+          data: {
+            id: crypto.randomUUID(),
+            business_date: businessDate,
+            updated_at: new Date()
+          }
+        });
+      }
+
+      if (salesDay.status === 'CLOSED') {
+        throw new Error('DAY_CLOSED');
+      }
+
+      const item = await tx.dailySalesLineItem.create({
         data: {
           id: crypto.randomUUID(),
-          business_date: businessDate,
+          session_id: salesDay.id,
+          product_name: parsed.data.productName,
+          product_id: parsed.data.productId?.trim() || null,
+          quantity: qty,
+          selling_price: decimal(sellingPrice),
+          cost_price: decimal(costPriceNum),
+          line_total: decimal(lineTotalNum),
+          line_profit: decimal(lineProfitNum),
+          created_by: session.user.id,
           updated_at: new Date()
         }
       });
-    }
 
-    if (salesDay.status === 'CLOSED') {
-      throw new Error('DAY_CLOSED');
-    }
+      const nextSalesTotal = new Prisma.Decimal(salesDay.day_sales_total).plus(item.line_total);
+      const nextProfitTotal = new Prisma.Decimal(salesDay.day_profit_total).plus(item.line_profit);
 
-    const item = await tx.dailySalesLineItem.create({
-      data: {
-        id: crypto.randomUUID(),
-        session_id: salesDay.id,
-        product_name: parsed.data.productName,
-        product_id: parsed.data.productId?.trim() || null,
-        quantity: qty,
-        selling_price: decimal(sellingPrice),
-        cost_price: decimal(costPriceNum),
-        line_total: decimal(lineTotalNum),
-        line_profit: decimal(lineProfitNum),
-        created_by: session.user.id,
-        updated_at: new Date()
-      }
+      const updatedSession = await tx.dailySalesSession.update({
+        where: { id: salesDay.id },
+        data: {
+          day_sales_total: nextSalesTotal,
+          day_profit_total: nextProfitTotal,
+          day_balance: nextSalesTotal,
+          profit_balance: nextProfitTotal,
+          line_items_count: salesDay.line_items_count + 1,
+          updated_at: new Date()
+        },
+        include: {
+          entries: { orderBy: { created_at: 'asc' } }
+        }
+      });
+
+      return { item, session: updatedSession };
     });
-
-    const nextSalesTotal = new Prisma.Decimal(salesDay.day_sales_total).plus(item.line_total);
-    const nextProfitTotal = new Prisma.Decimal(salesDay.day_profit_total).plus(item.line_profit);
-
-    const updatedSession = await tx.dailySalesSession.update({
-      where: { id: salesDay.id },
-      data: {
-        day_sales_total: nextSalesTotal,
-        day_profit_total: nextProfitTotal,
-        day_balance: nextSalesTotal,
-        profit_balance: nextProfitTotal,
-        line_items_count: salesDay.line_items_count + 1,
-        updated_at: new Date()
-      },
-      include: {
-        entries: { orderBy: { created_at: 'asc' } }
-      }
-    });
-
-    return { item, session: updatedSession };
-  }).catch(err => {
-    if (err instanceof Error && err.message === 'DAY_CLOSED') return 'DAY_CLOSED' as const;
-    throw err;
-  });
+  } catch (err) {
+    if (err instanceof Error && err.message === 'DAY_CLOSED') {
+      result = 'DAY_CLOSED';
+    } else if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2021') {
+      return NextResponse.json(
+        { ok: false, message: 'Daily sales tables not found. Run `npx prisma migrate dev` (or deploy migration) first.' },
+        { status: 500 }
+      );
+    } else {
+      console.error('[daily-sales line-items] failed', err);
+      return NextResponse.json({ ok: false, message: 'Server error while saving line item' }, { status: 500 });
+    }
+  }
 
   if (result === 'DAY_CLOSED') {
     return NextResponse.json({ ok: false, message: 'This day is closed. Re-open it to add entries.' }, { status: 409 });
@@ -135,4 +150,3 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ ok: true, item: result.item, session: result.session, message: 'Line item added' });
 }
-

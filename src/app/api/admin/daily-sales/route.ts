@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { DailySalesSessionStatus } from '@prisma/client';
+import { DailySalesSessionStatus, Prisma } from '@prisma/client';
 import { authOptions } from '@/modules/auth/services/auth-options';
 import { prisma } from '@/database/prisma/client';
 
@@ -31,25 +31,37 @@ export async function GET(request: Request) {
 
   const ensure = searchParams.get('ensure') === '1';
 
-  let salesDay = await prisma.dailySalesSession.findUnique({
-    where: { business_date: parsedDate.date },
-    include: {
-      entries: { orderBy: { created_at: 'asc' } }
-    }
-  });
-
-  if (!salesDay && ensure) {
-    salesDay = await prisma.dailySalesSession.create({
-      data: {
-        id: crypto.randomUUID(),
-        business_date: parsedDate.date,
-        status: DailySalesSessionStatus.OPEN,
-        updated_at: new Date()
-      },
+  let salesDay = null;
+  try {
+    salesDay = await prisma.dailySalesSession.findUnique({
+      where: { business_date: parsedDate.date },
       include: {
         entries: { orderBy: { created_at: 'asc' } }
       }
     });
+
+    if (!salesDay && ensure) {
+      salesDay = await prisma.dailySalesSession.create({
+        data: {
+          id: crypto.randomUUID(),
+          business_date: parsedDate.date,
+          status: DailySalesSessionStatus.OPEN,
+          updated_at: new Date()
+        },
+        include: {
+          entries: { orderBy: { created_at: 'asc' } }
+        }
+      });
+    }
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2021') {
+      return NextResponse.json(
+        { ok: false, message: 'Daily sales tables not found. Run Prisma migration first.' },
+        { status: 500 }
+      );
+    }
+    console.error('[daily-sales GET] failed', err);
+    return NextResponse.json({ ok: false, message: 'Failed to load daily sales session' }, { status: 500 });
   }
 
   return NextResponse.json({
@@ -58,4 +70,3 @@ export async function GET(request: Request) {
     session: salesDay
   });
 }
-
