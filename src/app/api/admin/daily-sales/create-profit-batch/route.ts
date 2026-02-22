@@ -19,7 +19,7 @@ function getDayRangeUtc(dateStr: string) {
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
-  if (!session?.user?.id || session.user.role !== 'ADMIN') {
+  if (!session?.user?.id || (session.user.role !== 'ADMIN' && session.user.role !== 'ACCOUNTANT')) {
     return NextResponse.json({ ok: false, message: 'Forbidden' }, { status: 403 });
   }
 
@@ -100,4 +100,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, message: 'Failed to create profit batch from daily sales' }, { status: 500 });
   }
 }
-

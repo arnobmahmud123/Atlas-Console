@@ -19,7 +19,7 @@ function parseBusinessDate(value: string) {
 
 export async function PATCH(request: Request) {
   const session = await getServerSession(authOptions);
-  if (!session?.user?.id || session.user.role !== 'ADMIN') {
+  if (!session?.user?.id || (session.user.role !== 'ADMIN' && session.user.role !== 'ACCOUNTANT')) {
     return NextResponse.json({ ok: false }, { status: 403 });
   }
 
