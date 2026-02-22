@@ -50,7 +50,7 @@ const colorfulCardSkins = [
 export default function HomePage() {
   return (
     <ThemeShell>
-      <main className="homepage-light min-h-screen bg-[linear-gradient(180deg,#eef4ff_0%,#e6efff_38%,#dce8fb_100%)] text-slate-900">
+      <main className="homepage-light min-h-screen bg-[linear-gradient(180deg,#edf3ff_0%,#e3ecfb_42%,#d9e5f7_100%)] text-slate-900">
         <style>{`
           .homepage-light {
             color: #0f172a;
@@ -67,11 +67,24 @@ export default function HomePage() {
           .homepage-light .text-slate-500 {
             color: #94a3b8 !important;
           }
+          .homepage-light .text-cyan-100,
+          .homepage-light .text-cyan-200 {
+            color: #0f4c81 !important;
+          }
+          .homepage-light .text-violet-100,
+          .homepage-light .text-violet-200,
+          .homepage-light .text-fuchsia-200 {
+            color: #5b3aa8 !important;
+          }
+          .homepage-light .text-emerald-100,
+          .homepage-light .text-emerald-200 {
+            color: #0f766e !important;
+          }
           .homepage-light .border-white\\/5,
           .homepage-light .border-white\\/10,
           .homepage-light .border-white\\/15,
           .homepage-light .border-white\\/20 {
-            border-color: rgba(15, 23, 42, 0.08) !important;
+            border-color: rgba(15, 23, 42, 0.12) !important;
           }
           .homepage-light .bg-black\\/20,
           .homepage-light .bg-black\\/30,
@@ -81,14 +94,20 @@ export default function HomePage() {
           .homepage-light .bg-white\\/8,
           .homepage-light .bg-white\\/12,
           .homepage-light .bg-white\\/14 {
-            background-color: rgba(255, 255, 255, 0.68) !important;
-            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.86) !important;
+            backdrop-filter: blur(12px);
+          }
+          .homepage-light .shadow-\\[0_18px_44px_rgba\\(6\\,10\\,24\\,0\\.35\\)\\],
+          .homepage-light .shadow-\\[0_14px_40px_rgba\\(0\\,0\\,0\\,0\\.35\\)\\],
+          .homepage-light .shadow-\\[0_18px_50px_rgba\\(0\\,0\\,0\\,0\\.35\\)\\] {
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12) !important;
           }
           .homepage-light footer {
-            background: rgba(255, 255, 255, 0.55) !important;
+            background: rgba(255, 255, 255, 0.72) !important;
           }
           .homepage-light input {
             color: #0f172a !important;
+            background: rgba(255, 255, 255, 0.88) !important;
           }
           .homepage-light input::placeholder {
             color: #64748b !important;
@@ -139,7 +158,7 @@ export default function HomePage() {
               </div>
               <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">
                 Digital wealth operations,
-                <span className="mt-2 block bg-gradient-to-r from-cyan-100 via-blue-100 to-indigo-200 bg-clip-text text-transparent">
+                <span className="mt-2 block bg-gradient-to-r from-cyan-700 via-blue-700 to-indigo-700 bg-clip-text text-transparent">
                   rebuilt for scale.
                 </span>
               </h1>
