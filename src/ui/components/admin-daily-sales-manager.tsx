@@ -48,6 +48,7 @@ export function AdminDailySalesManager(props: { mode: 'entry' | 'report' }) {
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [profitBatchHref, setProfitBatchHref] = useState<string | null>(null);
 
   const [productName, setProductName] = useState('');
   const [productId, setProductId] = useState('');
@@ -156,6 +157,25 @@ export function AdminDailySalesManager(props: { mode: 'entry' | 'report' }) {
     }
     setSession(data?.session ?? null);
     setMessage(data?.message ?? 'Updated');
+  }
+
+  async function createProfitBatchFromDay() {
+    setMessage(null);
+    setProfitBatchHref(null);
+    const res = await fetch('/api/admin/daily-sales/create-profit-batch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ date })
+    });
+    const data = await safeJsonClient<any>(res);
+    if (!res.ok) {
+      setMessage(data?.message ?? 'Failed to create profit batch');
+      if (data?.batch?.id) setProfitBatchHref(`/admin/profits/approvals`);
+      return;
+    }
+    setMessage(data?.message ?? 'Profit batch created');
+    if (data?.batch?.id) setProfitBatchHref('/admin/profits/approvals');
   }
 
   return (
@@ -274,11 +294,25 @@ export function AdminDailySalesManager(props: { mode: 'entry' | 'report' }) {
               Re-open Day
             </button>
           )}
+          {session.status === 'CLOSED' ? (
+            <button
+              type="button"
+              onClick={createProfitBatchFromDay}
+              className="rounded-full border border-cyan-300/30 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-200"
+            >
+              Create Profit Batch from This Day Profit
+            </button>
+          ) : null}
           <span className="text-xs text-slate-400">
             {session.status === 'CLOSED'
               ? `Closed at ${session.ended_at ? new Date(session.ended_at).toLocaleString() : '—'}`
               : 'Day remains open and accumulates entries.'}
           </span>
+          {profitBatchHref ? (
+            <a href={profitBatchHref} className="text-xs text-cyan-200 underline">
+              Open Profit Batches
+            </a>
+          ) : null}
         </div>
       ) : null}
 
