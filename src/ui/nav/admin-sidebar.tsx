@@ -117,6 +117,12 @@ const Icons: Record<string, ReactNode> = {
       <path fill="currentColor" d="M3 3h18v2H3V3zm2 4h14v14H5V7zm3 3v8h2v-8H8zm4 3v5h2v-5h-2zm4-2v7h2v-7h-2z" />
     </svg>
   )
+  ,
+  sales: (
+    <svg viewBox="0 0 24 24" className={iconBase} aria-hidden="true">
+      <path fill="currentColor" d="M4 4h16v2H4V4zm1 4h14v12H5V8zm3 8h2v2H8v-2zm0-4h2v3H8v-3zm4-2h2v5h-2v-5zm4 3h2v2h-2v-2z" />
+    </svg>
+  )
 };
 
 const sections = [
@@ -145,6 +151,8 @@ const sections = [
   {
     title: 'Payments',
     items: [
+      { href: '/admin/sales', label: 'Daily Sales Entry', icon: Icons.sales },
+      { href: '/admin/sales/report', label: 'Daily Sales Report', icon: Icons.report },
       { href: '/admin/deposits', label: 'Deposits', icon: Icons.deposits },
       { href: '/admin/withdrawals', label: 'Withdrawals', icon: Icons.withdrawals },
       { href: '/admin/manual-approvals/deposits', label: 'Manual Deposit Review', icon: Icons.deposits },

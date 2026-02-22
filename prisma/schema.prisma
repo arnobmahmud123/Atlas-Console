@@ -274,6 +274,49 @@ model SiteSettings {
   updated_at DateTime
 }
 
+model DailySalesSession {
+  id               String                @id @db.Uuid
+  business_date    DateTime              @unique @db.Date
+  status           DailySalesSessionStatus @default(OPEN)
+  day_sales_total  Decimal               @default(0)
+  day_profit_total Decimal               @default(0)
+  day_balance      Decimal               @default(0)
+  profit_balance   Decimal               @default(0)
+  line_items_count Int                   @default(0)
+  started_at       DateTime              @default(now())
+  ended_at         DateTime?
+  locked_at        DateTime?
+  locked_by        String?               @db.Uuid
+  reopened_at      DateTime?
+  reopened_by      String?               @db.Uuid
+  created_at       DateTime              @default(now())
+  updated_at       DateTime
+  entries          DailySalesLineItem[]
+
+  @@index([business_date])
+  @@index([status])
+}
+
+model DailySalesLineItem {
+  id            String           @id @db.Uuid
+  session_id    String           @db.Uuid
+  product_name  String
+  product_id    String?
+  quantity      Int
+  selling_price Decimal
+  cost_price    Decimal
+  line_total    Decimal
+  line_profit   Decimal
+  created_by    String?          @db.Uuid
+  created_at    DateTime         @default(now())
+  updated_at    DateTime
+  session       DailySalesSession @relation(fields: [session_id], references: [id])
+
+  @@index([created_at])
+  @@index([product_id])
+  @@index([session_id])
+}
+
 model DocumentCenterItem {
   id            String                 @id @db.Uuid
   title         String
@@ -677,6 +720,11 @@ enum DepositStatus {
   PROCESSING
   SUCCESS
   FAILED
+}
+
+enum DailySalesSessionStatus {
+  OPEN
+  CLOSED
 }
 
 enum WalletType {
