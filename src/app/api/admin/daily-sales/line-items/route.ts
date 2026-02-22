@@ -24,6 +24,20 @@ function decimal(n: number | string) {
   return new Prisma.Decimal(n);
 }
 
+function makeProductId(date: Date, productName: string, sequence: number) {
+  const y = date.getUTCFullYear();
+  const m = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const d = String(date.getUTCDate()).padStart(2, '0');
+  const datePart = `${y}${m}${d}`;
+  const seqPart = String(sequence).padStart(4, '0');
+  const slug = productName
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, '')
+    .slice(0, 4)
+    .padEnd(4, 'X');
+  return `PRD-${datePart}-${slug}-${seqPart}`;
+}
+
 function parseBusinessDate(value: string) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
   const date = new Date(`${value}T00:00:00.000Z`);
@@ -94,12 +108,17 @@ export async function POST(request: Request) {
         throw new Error('DAY_CLOSED');
       }
 
+      const nextSequence = salesDay.line_items_count + 1;
+      const resolvedProductId = parsed.data.productId?.trim()
+        ? parsed.data.productId.trim()
+        : makeProductId(businessDate, parsed.data.productName, nextSequence);
+
       const item = await tx.dailySalesLineItem.create({
         data: {
           id: crypto.randomUUID(),
           session_id: salesDay.id,
           product_name: parsed.data.productName,
-          product_id: parsed.data.productId?.trim() || null,
+          product_id: resolvedProductId,
           quantity: qty,
           selling_price: decimal(sellingPrice),
           cost_price: decimal(costPriceNum),
