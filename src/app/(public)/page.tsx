@@ -121,19 +121,19 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <div className="rounded-2xl border border-white/10 bg-gradient-to-r from-white/8 via-white/5 to-white/0 p-4 shadow-[0_20px_60px_rgba(5,10,25,0.45)]">
+              <div className="rounded-2xl border border-white/15 bg-gradient-to-r from-white/14 via-white/10 to-white/5 p-4 shadow-[0_20px_60px_rgba(5,10,25,0.25)] backdrop-blur">
                 <LiveStats />
               </div>
             </div>
             <div className="space-y-4">
               <div className="rounded-3xl border border-white/15 bg-gradient-to-br from-white/12 via-[#8ec5ff]/10 to-[#7aa2ff]/10 p-6 shadow-[0_20px_60px_rgba(5,10,25,0.25)] ring-1 ring-white/10">
-                <div className="rounded-2xl border border-white/10 bg-slate-900/45 p-6">
+                <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur p-6">
                   <p className="text-xs uppercase tracking-[0.3em] text-cyan-200">Live allocation</p>
                   <p className="mt-3 text-3xl font-semibold">+16.9% APY</p>
-                  <p className="mt-2 text-sm text-slate-300">
+                  <p className="mt-2 text-sm text-slate-200">
                     Automated allocation across verified strategies with daily distribution.
                   </p>
-                  <div className="mt-6 flex items-center justify-between text-sm text-slate-300">
+                  <div className="mt-6 flex items-center justify-between text-sm text-slate-200">
                     <span>Next reward</span>
                     <span>02:14:56</span>
                   </div>
@@ -143,21 +143,21 @@ export default function HomePage() {
                 <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/12 via-indigo-200/10 to-blue-200/10 p-5 shadow-[0_18px_50px_rgba(39,69,163,0.14)]">
                   <p className="text-xs uppercase tracking-[0.22em] text-fuchsia-200">Yield Pulse</p>
                   <p className="mt-3 text-2xl font-semibold">+2.8%</p>
-                  <p className="mt-1 text-xs text-slate-300">Today trend</p>
+                  <p className="mt-1 text-xs text-slate-200">Today trend</p>
                 </div>
                 <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/12 via-emerald-200/10 to-cyan-200/10 p-5 shadow-[0_18px_50px_rgba(10,40,34,0.18)]">
                   <p className="text-xs uppercase tracking-[0.22em] text-emerald-200">Ops Health</p>
                   <p className="mt-3 text-2xl font-semibold">99.99%</p>
-                  <p className="mt-1 text-xs text-slate-300">Queue uptime</p>
+                  <p className="mt-1 text-xs text-slate-200">Queue uptime</p>
                 </div>
               </div>
               <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/12 via-indigo-200/10 to-violet-200/8 p-6 shadow-[0_20px_60px_rgba(10,14,28,0.28)]">
                 <p className="text-xs uppercase tracking-[0.3em] text-cyan-200">Security posture</p>
-                <div className="mt-4 grid gap-3 sm:grid-cols-2 text-sm text-slate-300">
-                  <div className="rounded-2xl border border-white/10 bg-slate-900/35 p-4">2FA enforced</div>
-                  <div className="rounded-2xl border border-white/10 bg-slate-900/35 p-4">Ledger audits</div>
-                  <div className="rounded-2xl border border-white/10 bg-slate-900/35 p-4">Risk scoring</div>
-                  <div className="rounded-2xl border border-white/10 bg-slate-900/35 p-4">Withdrawal holds</div>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2 text-sm text-slate-200">
+                  <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur p-4">2FA enforced</div>
+                  <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur p-4">Ledger audits</div>
+                  <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur p-4">Risk scoring</div>
+                  <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur p-4">Withdrawal holds</div>
                 </div>
               </div>
             </div>
@@ -242,7 +242,7 @@ export default function HomePage() {
 
         <section className="mx-auto max-w-6xl px-6 py-16">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="rounded-2xl border border-cyan-300/20 bg-gradient-to-br from-cyan-500/15 via-blue-500/10 to-indigo-500/15 p-6">
+            <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/12 via-cyan-200/10 to-indigo-200/8 p-6 backdrop-blur">
               <h2 className="text-2xl font-semibold">Profit calculator</h2>
               <p className="mt-2 text-sm text-slate-300">Estimate returns for any plan in seconds.</p>
               <div className="mt-4 grid gap-3 md:grid-cols-3">
@@ -254,7 +254,7 @@ export default function HomePage() {
                 Calculate
               </Button>
             </div>
-            <div className="rounded-2xl border border-violet-300/20 bg-gradient-to-br from-violet-500/20 via-fuchsia-500/10 to-blue-500/20 p-6">
+            <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/12 via-violet-200/10 to-blue-200/8 p-6 backdrop-blur">
               <p className="text-xs uppercase tracking-[0.3em] text-cyan-200">Capital flywheel</p>
               <h3 className="mt-3 text-xl font-semibold">Daily rewards, transparent ledger</h3>
               <p className="mt-2 text-sm text-slate-300">
@@ -292,19 +292,19 @@ export default function HomePage() {
 
         <section id="security" className="mx-auto max-w-6xl px-6 py-16">
           <div className="grid gap-6 lg:grid-cols-2">
-            <div className="rounded-2xl border border-emerald-300/20 bg-gradient-to-br from-emerald-500/18 via-cyan-500/10 to-blue-500/16 p-6">
+            <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/12 via-emerald-200/10 to-cyan-200/8 p-6 backdrop-blur">
               <h2 className="text-2xl font-semibold">Security</h2>
               <p className="mt-2 text-sm text-slate-300">
                 2FA, rate limiting, and audited ledgers keep assets protected.
               </p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2 text-sm text-slate-300">
-                <div className="rounded-2xl border border-white/10 bg-slate-900/35 p-4">Device fingerprinting</div>
-                <div className="rounded-2xl border border-white/10 bg-slate-900/35 p-4">Secure cookies</div>
-                <div className="rounded-2xl border border-white/10 bg-slate-900/35 p-4">Risk scoring</div>
-                <div className="rounded-2xl border border-white/10 bg-slate-900/35 p-4">Audit log trails</div>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2 text-sm text-slate-200">
+                <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur p-4">Device fingerprinting</div>
+                <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur p-4">Secure cookies</div>
+                <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur p-4">Risk scoring</div>
+                <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur p-4">Audit log trails</div>
               </div>
             </div>
-            <div className="rounded-2xl border border-fuchsia-300/20 bg-gradient-to-br from-fuchsia-500/15 via-violet-500/12 to-indigo-500/18 p-6">
+            <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/12 via-indigo-200/10 to-violet-200/8 p-6 backdrop-blur">
               <h2 className="text-2xl font-semibold">Compliance</h2>
               <p className="mt-2 text-sm text-slate-300">
                 KYC verification, risk scoring, and admin approvals built in.
@@ -319,7 +319,7 @@ export default function HomePage() {
         </section>
 
         <section className="mx-auto max-w-6xl px-6 py-16">
-          <h2 className="bg-gradient-to-r from-white via-violet-200 to-indigo-200 bg-clip-text text-2xl font-semibold text-transparent">
+          <h2 className="bg-gradient-to-r from-white via-blue-100 to-indigo-100 bg-clip-text text-2xl font-semibold text-transparent">
             Trusted by operators
           </h2>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -362,7 +362,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <footer className="border-t border-white/5 bg-slate-900/35">
+        <footer className="border-t border-white/10 bg-white/5 backdrop-blur">
           <div className="mx-auto flex flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between">
             <p className="text-sm text-slate-400">© 2026 Lumen Capital. All rights reserved.</p>
             <div className="flex flex-wrap gap-6 text-sm text-slate-300">
