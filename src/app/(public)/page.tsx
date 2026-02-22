@@ -59,26 +59,30 @@ export default function HomePage() {
             color: #0f172a !important;
           }
           .homepage-light .text-slate-300 {
-            color: #475569 !important;
+            color: #334155 !important;
           }
           .homepage-light .text-slate-400 {
-            color: #64748b !important;
+            color: #475569 !important;
           }
           .homepage-light .text-slate-500 {
-            color: #94a3b8 !important;
+            color: #64748b !important;
           }
           .homepage-light .text-cyan-100,
           .homepage-light .text-cyan-200 {
-            color: #0f4c81 !important;
+            color: #0b3b68 !important;
           }
           .homepage-light .text-violet-100,
           .homepage-light .text-violet-200,
           .homepage-light .text-fuchsia-200 {
-            color: #5b3aa8 !important;
+            color: #4c2e92 !important;
           }
           .homepage-light .text-emerald-100,
           .homepage-light .text-emerald-200 {
-            color: #0f766e !important;
+            color: #0f5f59 !important;
+          }
+          .homepage-light .text-xs,
+          .homepage-light .text-sm {
+            color: inherit;
           }
           .homepage-light .border-white\\/5,
           .homepage-light .border-white\\/10,
@@ -110,7 +114,7 @@ export default function HomePage() {
             background: rgba(255, 255, 255, 0.88) !important;
           }
           .homepage-light input::placeholder {
-            color: #64748b !important;
+            color: #475569 !important;
           }
           .homepage-light option {
             color: #0f172a;
