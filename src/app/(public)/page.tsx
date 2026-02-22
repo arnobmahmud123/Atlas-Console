@@ -50,32 +50,78 @@ const colorfulCardSkins = [
 export default function HomePage() {
   return (
     <ThemeShell>
-      <main className="min-h-screen bg-[linear-gradient(135deg,#0c1628_0%,#132444_35%,#1a3460_65%,#234377_100%)] text-white">
+      <main className="homepage-light min-h-screen bg-[linear-gradient(180deg,#eef4ff_0%,#e6efff_38%,#dce8fb_100%)] text-slate-900">
+        <style>{`
+          .homepage-light {
+            color: #0f172a;
+          }
+          .homepage-light .text-white {
+            color: #0f172a !important;
+          }
+          .homepage-light .text-slate-300 {
+            color: #475569 !important;
+          }
+          .homepage-light .text-slate-400 {
+            color: #64748b !important;
+          }
+          .homepage-light .text-slate-500 {
+            color: #94a3b8 !important;
+          }
+          .homepage-light .border-white\\/5,
+          .homepage-light .border-white\\/10,
+          .homepage-light .border-white\\/15,
+          .homepage-light .border-white\\/20 {
+            border-color: rgba(15, 23, 42, 0.08) !important;
+          }
+          .homepage-light .bg-black\\/20,
+          .homepage-light .bg-black\\/30,
+          .homepage-light .bg-slate-900\\/35,
+          .homepage-light .bg-slate-900\\/45,
+          .homepage-light .bg-white\\/5,
+          .homepage-light .bg-white\\/8,
+          .homepage-light .bg-white\\/12,
+          .homepage-light .bg-white\\/14 {
+            background-color: rgba(255, 255, 255, 0.68) !important;
+            backdrop-filter: blur(10px);
+          }
+          .homepage-light footer {
+            background: rgba(255, 255, 255, 0.55) !important;
+          }
+          .homepage-light input {
+            color: #0f172a !important;
+          }
+          .homepage-light input::placeholder {
+            color: #64748b !important;
+          }
+          .homepage-light option {
+            color: #0f172a;
+          }
+        `}</style>
         <div className="pointer-events-none fixed inset-0 -z-10">
-          <div className="absolute left-1/2 top-[-110px] h-[840px] w-[840px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(191,219,254,0.20),_rgba(129,140,248,0.10),_transparent_72%)]" />
-          <div className="absolute right-[-150px] top-[20px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,_rgba(125,211,252,0.18),_transparent_74%)]" />
-          <div className="absolute left-[-170px] bottom-[80px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,_rgba(196,181,253,0.14),_transparent_76%)]" />
-          <div className="absolute bottom-[-120px] right-[8%] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,_rgba(186,230,253,0.14),_transparent_78%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_8%,rgba(255,255,255,0.12),transparent_38%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_85%)]" />
+          <div className="absolute left-1/2 top-[-120px] h-[860px] w-[860px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(147,197,253,0.28),_rgba(129,140,248,0.14),_transparent_70%)]" />
+          <div className="absolute right-[-150px] top-[10px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,_rgba(186,230,253,0.28),_transparent_74%)]" />
+          <div className="absolute left-[-170px] bottom-[80px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,_rgba(221,214,254,0.22),_transparent_76%)]" />
+          <div className="absolute bottom-[-120px] right-[8%] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,_rgba(191,219,254,0.22),_transparent_78%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_6%,rgba(255,255,255,0.65),transparent_42%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.03)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_85%)]" />
         </div>
 
-        <header className="sticky top-0 z-50 border-b border-white/15 bg-gradient-to-r from-[#132544]/88 via-[#18335d]/84 to-[#24497d]/84 backdrop-blur-xl">
+        <header className="sticky top-0 z-50 border-b border-white/15 bg-[linear-gradient(to_right,rgba(255,255,255,0.75),rgba(241,245,255,0.72),rgba(232,240,255,0.72))] backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300/90 to-indigo-400/90">
                 <span className="text-sm font-semibold text-slate-900">L</span>
               </div>
-              <span className="text-sm font-semibold tracking-wide">Lumen Capital</span>
+              <span className="text-sm font-semibold tracking-wide text-slate-900">Lumen Capital</span>
             </div>
-            <nav className="hidden items-center gap-8 text-sm text-slate-300 md:flex">
-              <a href="#features" className="hover:text-white">Features</a>
-              <a href="#plans" className="hover:text-white">Plans</a>
-              <a href="#security" className="hover:text-white">Security</a>
-              <a href="#faq" className="hover:text-white">FAQ</a>
+            <nav className="hidden items-center gap-8 text-sm text-slate-600 md:flex">
+              <a href="#features" className="hover:text-slate-900">Features</a>
+              <a href="#plans" className="hover:text-slate-900">Plans</a>
+              <a href="#security" className="hover:text-slate-900">Security</a>
+              <a href="#faq" className="hover:text-slate-900">FAQ</a>
             </nav>
             <div className="flex items-center gap-3">
-              <Link href="/login" className="text-sm text-slate-300 hover:text-white">Login</Link>
+              <Link href="/login" className="text-sm text-slate-600 hover:text-slate-900">Login</Link>
               <Button className="rounded-full bg-gradient-to-r from-cyan-300 to-indigo-400 text-slate-900 hover:opacity-90">
                 Get Started
               </Button>
