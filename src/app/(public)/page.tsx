@@ -252,7 +252,7 @@ export default function HomePage() {
         <section id="features" className="mx-auto max-w-6xl px-6 py-16">
           <div className="flex items-end justify-between gap-6">
             <div>
-              <h2 className="bg-gradient-to-r from-white via-violet-200 to-fuchsia-200 bg-clip-text text-2xl font-semibold text-transparent">
+              <h2 className="text-2xl font-semibold text-slate-900">
                 Why operators choose Lumen
               </h2>
               <p className="mt-2 text-sm text-slate-300">Enterprise controls without enterprise drag.</p>
@@ -388,7 +388,7 @@ export default function HomePage() {
         </section>
 
         <section className="mx-auto max-w-6xl px-6 py-16">
-          <h2 className="bg-gradient-to-r from-white via-blue-100 to-indigo-100 bg-clip-text text-2xl font-semibold text-transparent">
+          <h2 className="text-2xl font-semibold text-slate-900">
             Trusted by operators
           </h2>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
