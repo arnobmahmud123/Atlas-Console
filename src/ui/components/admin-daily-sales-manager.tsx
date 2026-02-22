@@ -43,7 +43,7 @@ function money(v?: string | number | null) {
 }
 
 export function AdminDailySalesManager(props: { mode: 'entry' | 'report' }) {
-  const [date, setDate] = useState(todayStr());
+  const [date, setDate] = useState('');
   const [session, setSession] = useState<SalesSession | null>(null);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -91,6 +91,14 @@ export function AdminDailySalesManager(props: { mode: 'entry' | 'report' }) {
   }
 
   useEffect(() => {
+    if (!date) {
+      setDate(todayStr());
+      return;
+    }
+  }, [date]);
+
+  useEffect(() => {
+    if (!date) return;
     load().catch(() => setMessage('Failed to load'));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date, props.mode]);
@@ -270,7 +278,7 @@ export function AdminDailySalesManager(props: { mode: 'entry' | 'report' }) {
 
       <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
         <div className="flex items-center justify-between gap-4">
-          <h2 className="text-lg font-semibold">Entries for {date}</h2>
+          <h2 className="text-lg font-semibold">Entries for {date || '...'}</h2>
           <span className="text-xs text-slate-400">{session?.entries?.length ?? 0} item(s)</span>
         </div>
         <div className="mt-4 overflow-x-auto">
@@ -323,4 +331,3 @@ export function AdminDailySalesManager(props: { mode: 'entry' | 'report' }) {
     </div>
   );
 }
-
