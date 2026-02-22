@@ -182,6 +182,7 @@ export default async function DashboardPage() {
             <Link href="/dashboard/investments" className="bg-card-navy ui-surface rounded-2xl p-4">Investments</Link>
             <Link href="/dashboard/referrals" className="bg-card-navy ui-surface rounded-2xl p-4">Referrals</Link>
             <Link href="/dashboard/payments" className="bg-card-navy ui-surface rounded-2xl p-4">Payments</Link>
+            <Link href="/dashboard/sales-board" className="bg-card-navy ui-surface rounded-2xl p-4">Live sales board</Link>
             <Link href="/dashboard/kyc" className="bg-card-navy ui-surface rounded-2xl p-4">KYC</Link>
             <Link href="/dashboard" className="bg-card-navy ui-surface rounded-2xl p-4">Account</Link>
           </div>

@@ -12,6 +12,7 @@ export const navItems = [
   { href: '/dashboard/support', label: 'Support Tickets' },
   { href: '/dashboard/announcements', label: 'Announcements' },
   { href: '/dashboard/documents', label: 'Document Center' },
+  { href: '/dashboard/sales-board', label: 'Live Sales Board' },
   { href: '/dashboard/cctv', label: 'Live CCTV' },
   { href: '/dashboard/kyc', label: 'KYC' },
   { href: '/dashboard/security', label: 'Security' },
