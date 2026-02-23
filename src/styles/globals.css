@@ -364,19 +364,19 @@
   }
 
   .app-admin-light .text-cyan-300 {
-    color: #0284c7 !important;
+    color: #0369a1 !important;
   }
 
   .app-admin-light .text-emerald-300 {
-    color: #047857 !important;
+    color: #065f46 !important;
   }
 
   .app-admin-light .text-rose-300 {
-    color: #be123c !important;
+    color: #9f1239 !important;
   }
 
   .app-admin-light .text-amber-400 {
-    color: #b45309 !important;
+    color: #92400e !important;
   }
 
   .app-admin-light .bg-emerald-400\/10 {
@@ -395,8 +395,68 @@
     border-color: rgba(244, 63, 94, 0.24) !important;
   }
 
+  .app-admin-light .bg-amber-400\/10 {
+    background: rgba(245, 158, 11, 0.14) !important;
+  }
+
+  .app-admin-light .border-amber-400\/30 {
+    border-color: rgba(245, 158, 11, 0.28) !important;
+  }
+
+  .app-admin-light .bg-cyan-400\/10,
+  .app-admin-light .bg-cyan-300\/10 {
+    background: rgba(6, 182, 212, 0.12) !important;
+  }
+
+  .app-admin-light .border-cyan-400\/30,
+  .app-admin-light .border-cyan-300\/30 {
+    border-color: rgba(6, 182, 212, 0.24) !important;
+  }
+
   .app-admin-light .bg-white\/10 {
     background: rgba(255, 255, 255, 0.62) !important;
+  }
+
+  .app-admin-light .hover\:bg-white\/5:hover {
+    background: rgba(59, 130, 246, 0.06) !important;
+  }
+
+  /* Sidebar active item contrast (stronger than generic light cards). */
+  .app-admin-light aside .bg-card-accent.ui-surface-nav {
+    background: linear-gradient(135deg, #cfe0ff 0%, #bdd5ff 45%, #aac7ff 100%) !important;
+    border-color: rgba(59, 130, 246, 0.22) !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.65),
+      0 10px 20px rgba(59, 130, 246, 0.14);
+  }
+
+  .app-admin-light aside .bg-card-accent.ui-surface-nav .text-white,
+  .app-admin-light aside .bg-card-accent.ui-surface-nav span {
+    color: #0f172a !important;
+  }
+
+  .app-admin-light aside .bg-card-accent.ui-surface-nav .bg-cyan-300,
+  .app-admin-light aside .bg-card-accent.ui-surface-nav .bg-cyan-300\/60 {
+    background: #0ea5e9 !important;
+    box-shadow: 0 0 12px rgba(14, 165, 233, 0.35) !important;
+  }
+
+  /* Donut / pie chart labels and legends */
+  .app-admin-light .bg-card-steel .text-xs.text-slate-400,
+  .app-admin-light .bg-card-indigo .text-xs.text-slate-400,
+  .app-admin-light .bg-card-navy .text-xs.text-slate-400 {
+    color: #3f4f63 !important;
+  }
+
+  .app-admin-light .bg-card-navy.ui-surface.flex.items-center.gap-2.rounded-full {
+    background: linear-gradient(135deg, #ffffff 0%, #f2f7ff 55%, #eaf2ff 100%) !important;
+    border-color: rgba(15, 23, 42, 0.08) !important;
+  }
+
+  .app-admin-light .bg-card-navy.ui-surface.flex.items-center.gap-2.rounded-full .text-white,
+  .app-admin-light .bg-card-navy.ui-surface.flex.items-center.gap-2.rounded-full span:last-child {
+    color: #0f172a !important;
+    font-weight: 600;
   }
 
   .app-admin-light .border-white\/10 {
