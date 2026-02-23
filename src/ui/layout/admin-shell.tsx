@@ -16,7 +16,7 @@ export function AdminShell(props: {
   }>;
 }) {
   return (
-    <div className="app-dashboard-theme bg-enterprise-header flex min-h-screen">
+    <div className="app-admin-light app-dashboard-theme bg-enterprise-header flex min-h-screen">
       <AnnouncementPopup initialAnnouncements={props.announcements} />
       <AdminSidebar />
       <div className="flex min-h-screen flex-1 flex-col">
