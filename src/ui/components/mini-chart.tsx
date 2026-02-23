@@ -26,7 +26,8 @@ export function MiniChart({ title, points, color = 'bg-cyan-300' }: MiniChartPro
           <span className="text-xs text-slate-400">Hover bars</span>
         )}
       </div>
-      <div className="mt-4 grid grid-cols-7 gap-2">
+      <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-3">
+      <div className="grid grid-cols-7 gap-2">
         {points.map(point => (
           <div key={point.label} className="flex flex-col items-center gap-2 text-xs text-slate-400">
             <div className="group relative h-20 w-4 rounded-full bg-white/10">
@@ -40,9 +41,11 @@ export function MiniChart({ title, points, color = 'bg-cyan-300' }: MiniChartPro
                 {point.value}
               </div>
             </div>
-            <span>{point.value}</span>
+            <span className="text-[10px] text-slate-400">{point.label}</span>
+            <span className="font-medium text-slate-300">{point.value}</span>
           </div>
         ))}
+      </div>
       </div>
     </div>
   );

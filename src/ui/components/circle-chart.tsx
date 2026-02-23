@@ -31,6 +31,7 @@ export function CircleChart({ title, points, colors }: CircleChartProps) {
   const total = displayTotal || 1;
   const formatValue = (value: number) =>
     value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const activePoint = hovered ?? points[0] ?? null;
 
   const gradient = useMemo(() => {
     let acc = 0;
@@ -63,6 +64,11 @@ export function CircleChart({ title, points, colors }: CircleChartProps) {
             <div className="flex h-full w-full flex-col items-center justify-center text-center">
               <p className="text-[10px] uppercase tracking-[0.35em] text-slate-400">Total</p>
               <p className="text-2xl font-semibold text-white">{formatValue(displayTotal)}</p>
+              {activePoint ? (
+                <p className="mt-1 max-w-[82px] truncate text-[10px] text-slate-300">
+                  {activePoint.label}
+                </p>
+              ) : null}
             </div>
           </div>
         </div>
@@ -71,7 +77,9 @@ export function CircleChart({ title, points, colors }: CircleChartProps) {
           {points.map((point, index) => (
             <div
               key={point.label}
-              className="bg-card-steel ui-surface flex items-center gap-2 rounded-full px-3 py-1 transition hover:border-white/30 hover:bg-white/5"
+              className={`bg-card-steel ui-surface flex items-center gap-2 rounded-full px-3 py-1 transition hover:border-white/30 hover:bg-white/5 ${
+                hovered?.label === point.label ? 'ring-1 ring-white/15' : ''
+              }`}
               onMouseEnter={() => setHovered(point)}
               onMouseLeave={() => setHovered(null)}
             >
@@ -80,6 +88,7 @@ export function CircleChart({ title, points, colors }: CircleChartProps) {
                 style={{ backgroundColor: chartPalette[index % chartPalette.length] }}
               />
               <span className="flex-1">{point.label}</span>
+              <span className="text-slate-400">{((point.value / total) * 100).toFixed(1)}%</span>
               <span className="text-white">{formatValue(point.value)}</span>
             </div>
           ))}

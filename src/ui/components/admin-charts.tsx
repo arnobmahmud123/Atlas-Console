@@ -28,9 +28,21 @@ export function AdminCharts() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-2 text-xs text-slate-300">
-        <button onClick={() => setRange('7')} className="bg-card-navy ui-surface rounded-full px-3 py-1">7d</button>
-        <button onClick={() => setRange('30')} className="bg-card-navy ui-surface rounded-full px-3 py-1">30d</button>
-        <button onClick={() => setRange('90')} className="bg-card-navy ui-surface rounded-full px-3 py-1">90d</button>
+        {[
+          { key: '7', label: '7d' },
+          { key: '30', label: '30d' },
+          { key: '90', label: '90d' }
+        ].map(btn => (
+          <button
+            key={btn.key}
+            onClick={() => setRange(btn.key)}
+            className={`ui-surface rounded-full px-3 py-1 transition ${
+              range === btn.key ? 'bg-card-accent text-white' : 'bg-card-navy text-slate-300 hover:bg-card-indigo'
+            }`}
+          >
+            {btn.label}
+          </button>
+        ))}
       </div>
       {data ? (
         <div className="grid gap-4 lg:grid-cols-3">
