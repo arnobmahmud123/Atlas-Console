@@ -516,11 +516,24 @@
     border-color: rgba(255, 255, 255, 0.08) !important;
   }
 
+  .app-admin-light .bg-slate-950\/75 {
+    background: rgba(30, 41, 59, 0.86) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
   .app-admin-light .bg-slate-950\/80 .text-white {
     color: #f8fafc !important;
   }
 
+  .app-admin-light .bg-slate-950\/75 .text-white {
+    color: #f8fafc !important;
+  }
+
   .app-admin-light .bg-slate-950\/80 .text-slate-400 {
+    color: #cbd5e1 !important;
+  }
+
+  .app-admin-light .bg-slate-950\/75 .text-slate-400 {
     color: #cbd5e1 !important;
   }
 
