@@ -459,6 +459,54 @@
     font-weight: 600;
   }
 
+  /* Status badges in admin tables/lists */
+  .app-admin-light .text-emerald-200 {
+    color: #065f46 !important;
+  }
+
+  .app-admin-light .text-rose-200 {
+    color: #9f1239 !important;
+  }
+
+  .app-admin-light .text-amber-200 {
+    color: #92400e !important;
+  }
+
+  .app-admin-light .bg-emerald-400\/10.text-emerald-200,
+  .app-admin-light .bg-emerald-400\/10 .text-emerald-200 {
+    color: #065f46 !important;
+  }
+
+  .app-admin-light .bg-rose-400\/10.text-rose-200,
+  .app-admin-light .bg-rose-400\/10 .text-rose-200 {
+    color: #9f1239 !important;
+  }
+
+  .app-admin-light .bg-amber-400\/10.text-amber-200,
+  .app-admin-light .bg-amber-400\/10 .text-amber-200 {
+    color: #92400e !important;
+  }
+
+  /* Circle/donut chart center labels are on a dark center disk; keep them light. */
+  .app-admin-light .bg-slate-950\/80 {
+    background: rgba(30, 41, 59, 0.9) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .app-admin-light .bg-slate-950\/80 .text-white {
+    color: #f8fafc !important;
+  }
+
+  .app-admin-light .bg-slate-950\/80 .text-slate-400 {
+    color: #cbd5e1 !important;
+  }
+
+  /* Activity map cells need visible edges on light surfaces. */
+  .app-admin-light .h-6.w-6.rounded-lg[title^='Activity score'] {
+    border: 1px solid rgba(59, 130, 246, 0.14);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  }
+
   .app-admin-light .border-white\/10 {
     border-color: rgba(15, 23, 42, 0.08) !important;
   }
