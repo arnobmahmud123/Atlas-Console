@@ -459,6 +459,29 @@
     font-weight: 600;
   }
 
+  /* Approval backlog / pie legend rows in light admin mode */
+  .app-admin-light .bg-card-steel.ui-surface.flex.items-center.gap-2.rounded-full {
+    background: linear-gradient(135deg, #ffffff 0%, #f4f8ff 55%, #ecf3ff 100%) !important;
+    border-color: rgba(15, 23, 42, 0.08) !important;
+  }
+
+  .app-admin-light .bg-card-steel.ui-surface.flex.items-center.gap-2.rounded-full span {
+    color: #243244 !important;
+  }
+
+  .app-admin-light .bg-card-steel.ui-surface.flex.items-center.gap-2.rounded-full .text-slate-400 {
+    color: #516174 !important;
+  }
+
+  .app-admin-light .bg-card-steel.ui-surface.flex.items-center.gap-2.rounded-full .text-white {
+    color: #0f172a !important;
+    font-weight: 600;
+  }
+
+  .app-admin-light .bg-card-steel.ui-surface.rounded-2xl .text-xs.text-slate-400 {
+    color: #475569 !important;
+  }
+
   /* Status badges in admin tables/lists */
   .app-admin-light .text-emerald-200 {
     color: #065f46 !important;
