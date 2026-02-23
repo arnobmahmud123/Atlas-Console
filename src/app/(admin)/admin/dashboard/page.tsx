@@ -74,7 +74,7 @@ export default async function AdminDashboardPage() {
   ];
 
   return (
-    <div className="space-y-6 text-white">
+    <div className="space-y-4 text-white">
       <div className="bg-enterprise-header ui-surface relative overflow-hidden rounded-3xl p-6">
         <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-cyan-500/20 blur-3xl" />
         <div className="absolute -bottom-20 -left-10 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl" />
@@ -203,17 +203,17 @@ export default async function AdminDashboardPage() {
         })}
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="bg-card-steel ui-surface rounded-2xl p-6">
+      <div className="grid gap-4 xl:grid-cols-12">
+        <div className="bg-card-steel ui-surface rounded-2xl p-5 xl:col-span-8">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">Activity map</h2>
             <span className="text-xs text-slate-400">Last 28 days</span>
           </div>
-          <div className="mt-4 grid grid-cols-7 gap-2">
+          <div className="mt-4 grid grid-cols-7 gap-2.5">
             {activityMap.map((value, index) => (
               <div
                 key={index}
-                className="h-6 w-6 rounded-lg"
+                className="h-7 w-7 rounded-lg"
                 style={{ backgroundColor: `rgba(56, 189, 248, ${0.15 + value * 0.75})` }}
                 title={`Activity score ${(value * 100).toFixed(0)}%`}
               />
@@ -221,7 +221,7 @@ export default async function AdminDashboardPage() {
           </div>
           <p className="mt-3 text-xs text-slate-400">Scores reflect deposits + user growth mix.</p>
         </div>
-        <div className="bg-card-indigo ui-surface rounded-2xl p-6">
+        <div className="bg-card-indigo ui-surface rounded-2xl p-5 xl:col-span-4">
           <h2 className="text-lg font-semibold">Security posture</h2>
           <div className="mt-4 grid gap-3 text-sm text-slate-300">
             {[
@@ -239,46 +239,60 @@ export default async function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[1fr_1fr]">
-        <div className="bg-card-steel ui-surface rounded-2xl p-6">
+      <div className="grid gap-4 xl:grid-cols-12">
+        <div className="bg-card-steel ui-surface rounded-2xl p-5 xl:col-span-6">
           <h2 className="text-lg font-semibold">Daily revenue (7 days)</h2>
-          <div className="mt-4 grid grid-cols-7 gap-2">
+          <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-3">
+          <div className="grid grid-cols-7 gap-2">
             {data.dailyRevenue.map((value, i) => (
               <div key={i} className="flex flex-col items-center gap-2 text-xs text-slate-400">
-                <div className="h-20 w-3 rounded-full bg-cyan-300/30">
+                <div className="h-24 w-4 rounded-full border border-white/10 bg-cyan-300/20">
                   <div className="h-full w-full rounded-full bg-cyan-300" style={{ height: `${Math.min(100, value / 10)}%` }} />
                 </div>
                 <span>{value}</span>
               </div>
             ))}
           </div>
+          </div>
         </div>
-        <div className="bg-card-indigo ui-surface rounded-2xl p-6">
+        <div className="bg-card-indigo ui-surface rounded-2xl p-5 xl:col-span-6">
           <h2 className="text-lg font-semibold">User growth (7 days)</h2>
-          <div className="mt-4 grid grid-cols-7 gap-2">
+          <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-3">
+          <div className="grid grid-cols-7 gap-2">
             {data.userGrowth.map((value, i) => (
               <div key={i} className="flex flex-col items-center gap-2 text-xs text-slate-400">
-                <div className="h-20 w-3 rounded-full bg-blue-300/30">
+                <div className="h-24 w-4 rounded-full border border-white/10 bg-blue-300/20">
                   <div className="h-full w-full rounded-full bg-blue-300" style={{ height: `${Math.min(100, value * 10)}%` }} />
                 </div>
                 <span>{value}</span>
               </div>
             ))}
           </div>
+          </div>
         </div>
       </div>
 
-      <AdminCharts />
+      <div className="grid gap-4 xl:grid-cols-12">
+        <div className="space-y-4 xl:col-span-12">
+          <AdminCharts />
+        </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <GlowingLineChart title="Revenue velocity" values={revenueSeries} accent="#22d3ee" />
-        <GlowingLineChart title="User acceleration" values={growthSeries.map(value => value * 10)} accent="#a78bfa" />
-      </div>
+        <div className="xl:col-span-6">
+          <GlowingLineChart title="Revenue velocity" values={revenueSeries} accent="#22d3ee" />
+        </div>
+        <div className="xl:col-span-6">
+          <GlowingLineChart title="User acceleration" values={growthSeries.map(value => value * 10)} accent="#a78bfa" />
+        </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <PieChart title="Approval backlog mix" points={approvalMix} colors={['#f59e0b', '#f97316', '#f43f5e']} />
-        <BarChart title="Deposit volume" values={revenueSeries} color="from-cyan-400 to-blue-500" />
-        <BarChart title="Investment volume" values={volumeSeries} color="from-emerald-400 to-lime-400" />
+        <div className="xl:col-span-4">
+          <PieChart title="Approval backlog mix" points={approvalMix} colors={['#f59e0b', '#f97316', '#f43f5e']} />
+        </div>
+        <div className="xl:col-span-4">
+          <BarChart title="Deposit volume" values={revenueSeries} color="from-cyan-400 to-blue-500" />
+        </div>
+        <div className="xl:col-span-4">
+          <BarChart title="Investment volume" values={volumeSeries} color="from-emerald-400 to-lime-400" />
+        </div>
       </div>
 
       <div className="bg-card-steel ui-surface rounded-2xl p-6">
